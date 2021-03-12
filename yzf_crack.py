@@ -30,10 +30,19 @@ class CryptoJs:
 
 if '__main__' == __name__:
     if len(sys.argv) !=3:
-        exit('USAGE: py ' + sys.argv[0] + ' [key] [encrypted_text]')
+        exit('USAGE: py ' + sys.argv[0] + ' [key] [encrypted_text/path_to_file]')
     key = sys.argv[1]
-    encrypted = sys.argv[2]
+    try:
+        with open(sys.argv[2]) as f:
+            encrypted = f.read()
+    except Exception as e:
+        encrypted = sys.argv[2]
 
     passphrase = build_passphase(key)
     cj = CryptoJs(passphrase.encode())
     print(cj.decrypt(encrypted).decode())
+
+
+# https://cryptojs.gitbook.io/docs/
+# https://developer.mozilla.org/en-US/docs/WebAssembly/Understanding_the_text_format
+# https://blog.csdn.net/qq_33682575/article/details/104602515
